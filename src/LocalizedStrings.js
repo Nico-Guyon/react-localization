@@ -34,7 +34,11 @@ const placeholderRegex = /(\{[\d|\w]+\})/;
 */
 LocalizedStrings.prototype.formatString = (str, ...valuesForPlaceholders) => {
         let hasObject = false;
-        const res = (str || '')
+        let input = str || "";
+        if (typeof input === "string") {
+          input = this.getString(str, null, true) || input;
+        }
+        const res = input
             .split(placeholderRegex)
             .filter(textPart => !!textPart)
             .map((textPart, index) => {
